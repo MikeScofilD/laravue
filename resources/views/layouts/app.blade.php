@@ -21,11 +21,10 @@
 </head>
 <body>
     <div id="app">
-
+        {{-- <post-component></post-component> --}}
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-
             <div class="container">
-                <example-component><example-component/>
+                <post-component></post-component>
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>

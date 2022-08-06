@@ -1,7 +1,9 @@
 <template>
   <div>
-    <SinglePostComponent></SinglePostComponent>
-    <table class="table">
+    <CreateComponent></CreateComponent>
+    <!-- <SinglePostComponent></SinglePostComponent> -->
+    <IndexComponentVue ref="index"></IndexComponentVue>
+    <!-- <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -11,68 +13,60 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="person in personsAge">
+        <tr v-for="person in persons">
           <th scope="row">{{ person.id }}</th>
           <td>{{ person.name }}</td>
           <td>{{ person.age }}</td>
           <td>{{ person.job }}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 </template>
 
 <script>
-import SinglePostComponent from "./SinglePostComponent.vue";
+import axios from "axios";
+// import SinglePostComponent from "./SinglePostComponent.vue";
+import CreateComponent from "./CreateComponent";
+import IndexComponentVue from "./IndexComponent.vue";
 
 export default {
   name: "PostComponent",
   components: {
-    SinglePostComponent,
+    // SinglePostComponent,
+    CreateComponent,
+    IndexComponentVue,
   },
   data() {
     return {
-      persons: [
-        {
-          id: 1,
-          name: "Vasya",
-          age: 18,
-          job: "coach",
-        },
-        {
-          id: 2,
-          name: "Lena",
-          age: 21,
-          job: "no job",
-        },
-        {
-          id: 3,
-          name: "Petr",
-          age: 13,
-          job: "free",
-        },
-        {
-          id: 4,
-          name: "Kolya",
-          age: 44,
-          job: "seller",
-        },
-      ],
+      persons: null,
     };
   },
+  mounted() {
+    // this.getPersons();
+    console.log(this.$refs.index.indexLog());
+    // console.log(this.$refs.index.name);
+  },
   methods: {
-    sayHello() {
-      console.log("hello");
+    getPersons() {
+      axios
+        .get("/persons")
+        .then((data) => {
+          // console.log(data);
+          this.persons = data.data;
+        })
+        .catch((error) => {})
+        .finally({});
     },
-    sayHi() {
-      console.log("hi");
-    },
+    parentLog(){
+        console.log('parentLog this is parent component');
+    }
   },
   computed: {
     personsAge() {
-        return this.persons.filter(function (person) {
-            return person.age > 20;
-        });
+      return this.persons.filter(function (person) {
+        return person.age > 20;
+      });
     },
   },
 };

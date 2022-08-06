@@ -24,7 +24,6 @@
         {{-- <post-component></post-component> --}}
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <post-component></post-component>
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -75,9 +74,11 @@
                     </ul>
                 </div>
             </div>
+            
         </nav>
 
         <main class="py-4">
+            <post-component></post-component>
             @yield('content')
         </main>
     </div>

@@ -20,9 +20,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        {{-- <post-component></post-component> --}}
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <div id="app" class="p-5">
+
+        <p>Hello</p>
+        @yield('content')
+        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -74,13 +76,12 @@
                     </ul>
                 </div>
             </div>
-            
+
         </nav>
 
         <main class="py-4">
-            <post-component></post-component>
             @yield('content')
-        </main>
+        </main> --}}
     </div>
 </body>
 </html>

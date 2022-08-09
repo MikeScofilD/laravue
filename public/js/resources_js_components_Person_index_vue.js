@@ -32,6 +32,13 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
         _this.people = res.data;
       });
+    },
+    deletePerson: function deletePerson(id) {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/people/' + id).then(function (res) {
+        _this2.getPeople();
+      });
     }
   }
 });
@@ -60,7 +67,35 @@ var render = function render() {
       attrs: {
         scope: "row"
       }
-    }, [_vm._v("1")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.age))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.job))])]);
+    }, [_vm._v("1")]), _vm._v(" "), _c("td", [_c("router-link", {
+      attrs: {
+        to: {
+          name: "person.show",
+          params: {
+            id: person.id
+          }
+        }
+      }
+    }, [_vm._v(_vm._s(person.name))])], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.age))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.job))]), _vm._v(" "), _c("td", [_c("router-link", {
+      attrs: {
+        to: {
+          name: "person.edit",
+          params: {
+            id: person.id
+          }
+        }
+      }
+    }, [_vm._v("Edit")])], 1), _vm._v(" "), _c("td", [_c("a", {
+      staticClass: "btn btn-outline-danger",
+      attrs: {
+        href: "#"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.deletePerson(person.id);
+        }
+      }
+    }, [_vm._v("Delete")])])]);
   }), 0)])]);
 };
 
@@ -84,7 +119,15 @@ var staticRenderFns = [function () {
     attrs: {
       scope: "col"
     }
-  }, [_vm._v("Job")])])]);
+  }, [_vm._v("Job")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Edit")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Delete")])])]);
 }];
 render._withStripped = true;
 

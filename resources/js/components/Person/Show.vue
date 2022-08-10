@@ -26,9 +26,11 @@ export default {
   },
   methods: {
     getPersons() {
-      axios.get("/api/people/" + this.$route.params.id).then((res) => {
-        this.person = res.data;
-        console.log("res:", res);
+      axios.get(`/api/people/${this.$route.params.id}`).then((res) => {
+        console.log("R:",res);
+        this.person = res.data.data;
+        console.log("Show.vue - Res:", res);
+
       });
     },
   },

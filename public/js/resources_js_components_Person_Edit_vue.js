@@ -32,7 +32,7 @@ __webpack_require__.r(__webpack_exports__);
     getPersons: function getPersons() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/people/' + this.$route.params.id).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/people/".concat(this.$route.params.id)).then(function (res) {
         _this.name = res.data.name;
         _this.age = res.data.age;
         _this.job = res.data.job;
@@ -42,12 +42,12 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().patch('/api/people/' + this.$route.params.id, {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().patch("/api/people/".concat(this.$route.params.id), {
         name: this.name,
         age: this.age,
         job: this.job
       }).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+        _this2.$router.push({
           name: 'person.show',
           params: {
             id: _this2.$route.params.id

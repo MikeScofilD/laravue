@@ -22,34 +22,54 @@
       />
     </div>
     <div class="mb-3">
-      <input type="text" placeholder="job" v-model="job" class="form-control" name="" id="" />
+      <input
+        type="text"
+        placeholder="job"
+        v-model="job"
+        class="form-control"
+        name=""
+        id=""
+      />
     </div>
     <div class="mb-3">
-      <input type="submit" @click.prevent="store" value="Add" class="btn btn-primary" name="" id="" />
+      <input
+        :disabled="!isDisabled"
+        type="submit"
+        @click.prevent="store"
+        value="Add"
+        class="btn btn-primary"
+        name=""
+        id=""
+      />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import router from '../../router';
+import axios from "axios";
 
 export default {
-    data() {
-        return {
-            name: null,
-            age: null,
-            job: null,
-        };
+  data() {
+    return {
+      name: null,
+      age: null,
+      job: null,
+    };
+  },
+  methods: {
+    store() {
+      axios
+        .post("/api/people", { name: this.name, age: this.age, job: this.job })
+        .then((res) => {
+          this.$router.push({ name: "person.index" });
+        });
     },
-    methods: {
-        store(){
-            axios.post('/api/people', {name: this.name, age: this.age, job: this.job})
-            .then( res => {
-                router.push({name: 'person.index'})
-            })
-        }
-    }
+  },
+  computed: {
+    isDisabled() {
+      return this.name && this.age && this.job;
+    },
+  },
 };
 </script>
 

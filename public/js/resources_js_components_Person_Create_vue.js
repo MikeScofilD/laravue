@@ -13,8 +13,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -26,15 +24,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     store: function store() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/people', {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/people", {
         name: this.name,
         age: this.age,
         job: this.job
       }).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
-          name: 'person.index'
+        _this.$router.push({
+          name: "person.index"
         });
       });
+    }
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      return this.name && this.age && this.job;
     }
   }
 });
@@ -138,6 +143,7 @@ var render = function render() {
   }, [_c("input", {
     staticClass: "btn btn-primary",
     attrs: {
+      disabled: !_vm.isDisabled,
       type: "submit",
       value: "Add",
       name: "",

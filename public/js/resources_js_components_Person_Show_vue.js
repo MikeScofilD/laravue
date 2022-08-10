@@ -26,9 +26,10 @@ __webpack_require__.r(__webpack_exports__);
     getPersons: function getPersons() {
       var _this = this;
 
-      axios.get("/api/people/" + this.$route.params.id).then(function (res) {
-        _this.person = res.data;
-        console.log("res:", res);
+      axios.get("/api/people/".concat(this.$route.params.id)).then(function (res) {
+        console.log("R:", res);
+        _this.person = res.data.data;
+        console.log("Show.vue - Res:", res);
       });
     }
   }

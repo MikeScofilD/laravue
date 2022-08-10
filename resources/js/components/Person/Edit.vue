@@ -1,12 +1,12 @@
 <template>
-  <div class="w-25">
+  <div class="w-25" v-if="person">
     Edit
     <div class="mb-3">
       <input
         type="text"
         placeholder="name"
         class="form-control"
-        v-model="name"
+        v-model="person.name"
         name=""
         id=""
       />
@@ -16,7 +16,7 @@
         type="number"
         placeholder="age"
         class="form-control"
-        v-model="age"
+        v-model="person.age"
         name=""
         id=""
       />
@@ -25,7 +25,7 @@
       <input
         type="text"
         placeholder="job"
-        v-model="job"
+        v-model="person.job"
         class="form-control"
         name=""
         id=""
@@ -33,8 +33,16 @@
     </div>
     <div class="mb-3">
       <input
+        :disabled="!isDisabled"
         type="submit"
-        @click.prevent="update"
+        @click.prevent="
+          $store.dispatch('update', {
+            id: person.id,
+            name: person.name,
+            age: person.age,
+            job: person.job,
+          })
+        "
         value="Update"
         class="btn btn-primary"
         name=""
@@ -45,37 +53,23 @@
 </template>
 
 <script>
-import axios from 'axios';
-import router from '../../router';
+import axios from "axios";
+import router from "../../router";
 export default {
-    name: "Edit",
-       data() {
-        return {
-            name: null,
-            age: null,
-            job: null,
-        };
+  name: "Edit",
+
+  mounted() {
+    this.$store.dispatch("getPerson", this.$route.params.id);
+  },
+  methods: {},
+  computed: {
+    isDisabled() {
+      return this.person.name && this.person.age && this.person.job;
     },
-    mounted(){
-       this.getPersons();
+    person() {
+      return this.$store.getters.person;
     },
-    methods: {
-        getPersons(){
-            axios.get(`/api/people/${this.$route.params.id}`)
-            .then(res => {
-                this.name = res.data.name;
-                this.age = res.data.age;
-                this.job = res.data.job;
-                console.log('res:',res);
-            })
-        },
-        update(){
-             axios.patch(`/api/people/${this.$route.params.id}`, {name: this.name, age: this.age, job: this.job})
-             .then(res => {
-                this.$router.push({name:'person.show', params: {id:this.$route.params.id }})
-             })
-        }
-    },
+  },
 };
 </script>
 

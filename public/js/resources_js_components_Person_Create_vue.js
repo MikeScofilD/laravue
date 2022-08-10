@@ -22,21 +22,7 @@ __webpack_require__.r(__webpack_exports__);
       job: null
     };
   },
-  methods: {
-    store: function store() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/people", {
-        name: this.name,
-        age: this.age,
-        job: this.job
-      }).then(function (res) {
-        _this.$router.push({
-          name: "person.index"
-        });
-      });
-    }
-  },
+  methods: {},
   computed: {
     isDisabled: function isDisabled() {
       return this.name && this.age && this.job;
@@ -152,7 +138,11 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.store.apply(null, arguments);
+        return _vm.$store.dispatch("store", {
+          name: _vm.name,
+          age: _vm.age,
+          job: _vm.job
+        });
       }
     }
   })])]);

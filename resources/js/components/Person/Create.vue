@@ -35,7 +35,7 @@
       <input
         :disabled="!isDisabled"
         type="submit"
-        @click.prevent="store"
+        @click.prevent="$store.dispatch('store', {name: name, age: age, job: job})"
         value="Add"
         class="btn btn-primary"
         name=""
@@ -57,13 +57,7 @@ export default {
     };
   },
   methods: {
-    store() {
-      axios
-        .post("/api/people", { name: this.name, age: this.age, job: this.job })
-        .then((res) => {
-          this.$router.push({ name: "person.index" });
-        });
-    },
+ 
   },
   computed: {
     isDisabled() {

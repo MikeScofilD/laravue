@@ -18,42 +18,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Edit",
-  data: function data() {
-    return {
-      name: null,
-      age: null,
-      job: null
-    };
-  },
   mounted: function mounted() {
-    this.getPersons();
+    this.$store.dispatch("getPerson", this.$route.params.id);
   },
-  methods: {
-    getPersons: function getPersons() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/people/".concat(this.$route.params.id)).then(function (res) {
-        _this.name = res.data.name;
-        _this.age = res.data.age;
-        _this.job = res.data.job;
-        console.log('res:', res);
-      });
+  methods: {},
+  computed: {
+    isDisabled: function isDisabled() {
+      return this.person.name && this.person.age && this.person.job;
     },
-    update: function update() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().patch("/api/people/".concat(this.$route.params.id), {
-        name: this.name,
-        age: this.age,
-        job: this.job
-      }).then(function (res) {
-        _this2.$router.push({
-          name: 'person.show',
-          params: {
-            id: _this2.$route.params.id
-          }
-        });
-      });
+    person: function person() {
+      return this.$store.getters.person;
     }
   }
 });
@@ -75,7 +49,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
+  return _vm.person ? _c("div", {
     staticClass: "w-25"
   }, [_vm._v("\n  Edit\n  "), _c("div", {
     staticClass: "mb-3"
@@ -83,8 +57,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.name,
-      expression: "name"
+      value: _vm.person.name,
+      expression: "person.name"
     }],
     staticClass: "form-control",
     attrs: {
@@ -94,12 +68,13 @@ var render = function render() {
       id: ""
     },
     domProps: {
-      value: _vm.name
+      value: _vm.person.name
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.name = $event.target.value;
+
+        _vm.$set(_vm.person, "name", $event.target.value);
       }
     }
   })]), _vm._v(" "), _c("div", {
@@ -108,8 +83,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.age,
-      expression: "age"
+      value: _vm.person.age,
+      expression: "person.age"
     }],
     staticClass: "form-control",
     attrs: {
@@ -119,12 +94,13 @@ var render = function render() {
       id: ""
     },
     domProps: {
-      value: _vm.age
+      value: _vm.person.age
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.age = $event.target.value;
+
+        _vm.$set(_vm.person, "age", $event.target.value);
       }
     }
   })]), _vm._v(" "), _c("div", {
@@ -133,8 +109,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.job,
-      expression: "job"
+      value: _vm.person.job,
+      expression: "person.job"
     }],
     staticClass: "form-control",
     attrs: {
@@ -144,12 +120,13 @@ var render = function render() {
       id: ""
     },
     domProps: {
-      value: _vm.job
+      value: _vm.person.job
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.job = $event.target.value;
+
+        _vm.$set(_vm.person, "job", $event.target.value);
       }
     }
   })]), _vm._v(" "), _c("div", {
@@ -157,6 +134,7 @@ var render = function render() {
   }, [_c("input", {
     staticClass: "btn btn-primary",
     attrs: {
+      disabled: !_vm.isDisabled,
       type: "submit",
       value: "Update",
       name: "",
@@ -165,10 +143,15 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.update.apply(null, arguments);
+        return _vm.$store.dispatch("update", {
+          id: _vm.person.id,
+          name: _vm.person.name,
+          age: _vm.person.age,
+          job: _vm.person.job
+        });
       }
     }
-  })])]);
+  })])]) : _vm._e();
 };
 
 var staticRenderFns = [];
